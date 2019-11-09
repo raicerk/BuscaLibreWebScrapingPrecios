@@ -1,25 +1,33 @@
 from flask import Flask, jsonify
+import json
+import Scraping as scr
 
 app = Flask(__name__)
 
-tasks = [
+listaLibros = [
     {
         'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
-        'done': False
+        'url': 'https://www.buscalibre.cl/libro-y-si-el-tiempo-no-existiera/9788425440571/p/51475704',
     },
     {
         'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
-        'done': False
+        'url': u'https://www.buscalibre.cl/libro-siete-breves-lecciones-de-fisica/9786078441433/p/47429624'
     }
 ]
 
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@app.route('/apidatos', methods=['GET'])
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    datos = []
+    for dat in listaLibros:
+        srapp = scr.scraping()
+        srapp.url = dat['url']
+        srapp.data()
+        datos.append({
+            'name': srapp.name,
+            'price': srapp.price
+        })
+    return jsonify(datos)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
