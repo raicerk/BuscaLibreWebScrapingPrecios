@@ -45,7 +45,5 @@ def log_error(e):
 if __name__ == "__main__":
     raw_html = simple_get('https://www.buscalibre.cl/libro-y-si-el-tiempo-no-existiera/9788425440571/p/51475704')
     html = BeautifulSoup(raw_html, 'html.parser')
-    largo = len(raw_html)
-    print(largo)
     result = html.findAll("span", {"itemprop" : "price"})
-    print(result)
+    print(result[0].text)
