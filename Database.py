@@ -2,10 +2,11 @@ import psycopg2
 
 class database:
 
-    def setLink(self):
-        print("si llego")
-        try:
-            connection = psycopg2.connect(
+    connection = object
+    link = ""
+
+    def __init__(self): 
+        self.connection = psycopg2.connect(
                 user = "raicerk",
                 password = "qwerty123",
                 host="172.18.0.2",
@@ -13,12 +14,16 @@ class database:
                 database="buscalibreprecios"
             )
 
-            cursor = connection.cursor()
+    def setLink(self):
 
-            cursor.execute("SELECT version();")
-            record = cursor.fetchone()
-            print("listo", record)
-            return record
+        try:
+            insert_query = "INSERT INTO LINK (link, estado) values ('{}',{})".format(self.link, True)
+            cursor = self.connection.cursor()
+            cursor.execute(insert_query)
+            self.connection.commit()
+            count = cursor.rowcount
+            print (count, "Record inserted successfully into mobile table")
+            return count
 
         except (Exception, psycopg2.Error) as error:
             print(error)

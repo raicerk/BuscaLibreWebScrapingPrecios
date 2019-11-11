@@ -33,14 +33,15 @@ def get_tasks():
 
 @app.route('/almacenaLink', methods=['POST'])
 def set_link():
-    dtb = db.database()
-    query = dtb.setLink()
 
     data = request.json
+    
+    dtb = db.database()
+    dtb.link = data['link']
+    query = dtb.setLink()
+    
     return jsonify({
         'ok': 200,
-        'data': data['test'],
-        'numero': data['hola'],
         'respuestadb': query
     })
 
