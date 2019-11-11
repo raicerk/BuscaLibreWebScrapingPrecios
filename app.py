@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 import Scraping as scr
+import Database as db
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ listaLibros = [
         'url': u'https://www.buscalibre.cl/libro-siete-breves-lecciones-de-fisica/9786078441433/p/47429624'
     }
 ]
+
 
 @app.route('/apidatos', methods=['GET'])
 def get_tasks():
@@ -29,5 +31,19 @@ def get_tasks():
     return jsonify(datos)
 
 
+@app.route('/almacenaLink', methods=['POST'])
+def set_link():
+    dtb = db.database()
+    query = dtb.setLink()
+
+    data = request.json
+    return jsonify({
+        'ok': 200,
+        'data': data['test'],
+        'numero': data['hola'],
+        'respuestadb': query
+    })
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
