@@ -9,21 +9,11 @@ FROM python:alpine
 #FROM continuumio/miniconda3
 
 LABEL Name=buscalibrewebscrapingprecios Version=0.0.1
-EXPOSE 5000
 
 WORKDIR /app
 ADD . /app
 
 # Using pip:
 RUN python3 -m pip install -r requirements.txt
-#CMD ["python3", "-m", "app.py"]
-CMD python /app/app.py
 
-# Using pipenv:
-#RUN python3 -m pip install pipenv
-#RUN pipenv install --ignore-pipfile
-#CMD ["pipenv", "run", "python3", "-m", "buscalibrewebscrapingprecios"]
-
-# Using miniconda (make sure to replace 'myenv' w/ your environment name):
-#RUN conda env create -f environment.yml
-#CMD /bin/bash -c "source activate myenv && python3 -m buscalibrewebscrapingprecios"
+CMD python3 /app/Scraping.py

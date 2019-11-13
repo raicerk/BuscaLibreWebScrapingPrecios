@@ -4,7 +4,3 @@ services:
   buscalibrewebscrapingprecios:
     image: buscalibrewebscrapingprecios
     build: .
-    expose:
-      - 5000
-    ports:
-      - 80:5000
