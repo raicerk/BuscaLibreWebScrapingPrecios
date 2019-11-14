@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 class scraping():
     url = ""
     e = ""
-    price = ""
+    price = 0
     name = ""
     author=""
 
@@ -58,7 +58,7 @@ class scraping():
         resultAuthor = aData
         resultPrice = html.findAll("span", {"itemprop" : "price"})
         resultName = html.findAll("h1", {"itemprop" : "name"})
-        self.price = resultPrice[0].text.replace("$ ", "").replace(".","")
+        self.price = int(resultPrice[0].text.replace("$ ", "").replace(".",""))
         self.name = resultName[0].text
         self.author = resultAuthor[0].text
         return ({
