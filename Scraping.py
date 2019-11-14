@@ -10,6 +10,7 @@ class scraping():
     e = ""
     price = ""
     name = ""
+    author=""
 
     def simple_get(self):
         """
@@ -47,16 +48,24 @@ class scraping():
         """
         print(self.e)
 
-    def data(self):
+    def scrap(self):
         raw_html = self.simple_get()
         html = BeautifulSoup(raw_html, 'html.parser')
+        divData = html.findAll("div", {"class" : "datos"})
+        aData = ""
+        for tag in divData:
+            aData = tag.findAll("a", {"class": "font-color-bl link-underline"})
+        resultAuthor = aData
         resultPrice = html.findAll("span", {"itemprop" : "price"})
         resultName = html.findAll("h1", {"itemprop" : "name"})
-        #print(resultPrice[0].text)
-        #print(resultName[0].text)
-        self.price = resultPrice[0].text
+        self.price = resultPrice[0].text.replace("$ ", "").replace(".","")
         self.name = resultName[0].text
-
+        self.author = resultAuthor[0].text
+        return ({
+            "precio": self.price,
+            "nombre": self.name,
+            "autor": self.author
+        })
 
 
 # if __name__ == "__main__":
