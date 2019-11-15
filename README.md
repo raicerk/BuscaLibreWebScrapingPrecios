@@ -2,7 +2,7 @@
 
 
 ```shell
-docker run --network=buscalibre -v /home/raicerk/Desarrollos/BuscaLibreWebScrapingPrecios:/script --rm python sh -c "pip install -r /script/requirements.txt && python /script/app.py"
+docker run --network=buscalibre -v /home/raicerk/Desarrollos/BuscaLibreWebScrapingPrecios:/script -v /etc/localtime:/etc/localtime:ro --rm python sh -c "pip install -r /script/requirements.txt && python /script/app.py"
 ```
 
 ## Entorno de desarrollo y dependencias

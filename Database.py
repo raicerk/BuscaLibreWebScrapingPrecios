@@ -38,9 +38,10 @@ class database:
             print(error)
 
     def getListalink(self):
-        
-        try:
 
+        try:
+            print("::::::: Comenzando scraping :::::::")
+            
             self.updatePrecioNuevo()
 
             select_query = '''SELECT link.id,
@@ -71,14 +72,6 @@ class database:
                 cursor2.execute(select_query_precio_anterior)
                 datas = cursor2.fetchone()               
                 self.connection.commit()
-
-
-
-                print({
-                    "precioscrap": scr.price,
-                    "preciodato": datas[0]
-                })
-
 
                 if(scr.price != datas[0]):
                     self.precio = scr.price
