@@ -16,9 +16,9 @@ class database:
         self.connection = psycopg2.connect(
                 user = "raicerk",
                 password = "qwerty123",
-                host="172.21.0.2",
+                host="127.0.0.1",
                 port="5432",
-                database="buscalibreprecios"
+                database="buscalibre"
             )
 
     def setPrecio(self):
@@ -72,11 +72,12 @@ class database:
                 cursor2.execute(select_query_precio_anterior)
                 datas = cursor2.fetchone()               
                 self.connection.commit()
-
-                if(scr.price != datas[0]):
-                    self.precio = scr.price
-                    self.idlink = row[0]
-                    self.fecha = time.strftime("%Y-%m-%d")
+                self.precio = scr.price
+                self.idlink = row[0]
+                self.fecha = time.strftime("%Y-%m-%d")
+                if(datas is None):
+                    arrayprecios.append(self.setPrecio())
+                elif((scr.price != datas[0])):
                     arrayprecios.append(self.setPrecio())
 
             return arrayprecios
